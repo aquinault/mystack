@@ -1,0 +1,173 @@
+<html ng-app="myApp">
+<head>
+  <!--link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script-->
+
+  <link rel="stylesheet" href="bootstrap.min.css">
+  <script src="jquery-1.11.3.min.js"></script>
+  <script src="angular.min.js"></script>
+  <script src="bootstrap.min.js"></script>
+
+  <script>
+    // Create a new module
+    var myModule = angular.module('myApp', []);
+
+    myModule.directive('fileModel', ['$parse', function ($parse) {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            var model = $parse(attrs.fileModel);
+            var modelSetter = model.assign;
+
+            element.bind('change', function(){
+                scope.$apply(function(){
+                    modelSetter(scope, element[0].files[0]);
+                });
+            });
+        }
+    };
+    }]);
+
+    myModule.controller('myCtrl', ['$scope', '$http', '$timeout', function($scope, $http, $timeout) {
+      /*$scope.images = [
+        { "src": "/pictures/V1ut5Lqrg", "alt": "First Image" }, 
+        { "src": "/pictures/1", "alt": "Second image" }, 
+        { "src": "/pictures/Vk66mUqSl", "alt": "Third image" }, 
+        { "src": "/pictures/NJeX9QESe", "alt": "Fourth image" }
+      ];*/
+      $scope.picturename = '';
+
+      $scope.refreshPicture = function() {              
+        $http.get("/pictures").then(function(response) {            
+            $scope.images = [];
+            for(var i=0; i<response.data.length; i++) {
+              var myObj = {
+                'src': '/pictures/' + response.data[i]._id,
+                'alt': response.data[i]._type,
+                '_id': response.data[i]._id,
+                'name': response.data[i].name
+              }
+              $scope.images.push(myObj);
+            }            
+        });      
+      };
+           
+      $scope.deletePicture = function(_id) {
+        //$scope.quantityResult = calculateService.calculate($scope.quantity, 10);
+        if (confirm("sure to delete")) {
+          // todo code for deletion
+          console.log('deletePicture');
+          $http.delete("/pictures/" + _id).then(function(response) {
+            for(var i = $scope.images.length - 1; i >= 0; i--) {
+                if($scope.images[i]._id === response.data._id) {
+                   $scope.images.splice(i, 1);
+                }
+            }
+          });
+        }
+      };
+
+      $scope.uploadFile = function(){
+        var file = $scope.myFile;
+        var uploadUrl = "/multer";
+        var fd = new FormData();
+        fd.append('file', file);
+        fd.append('picturename', $scope.picturename);
+
+        console.log($scope.picturename);
+
+        $http.post(uploadUrl,fd, {
+            transformRequest: angular.identity,
+            headers: {'Content-Type': undefined}
+        })
+        .success(function(response){
+          //$scope.refreshPicture();
+          $timeout(function() {
+            console.log("success!!");
+            var myObj = {
+              'src': '/pictures/' + response._id,
+              'alt': '',
+              '_id': response._id,
+              'name': response.name
+            }
+
+            $scope.images.push(myObj);            
+
+          }, 900);
+        })
+        .error(function(){
+          console.log("error!!");
+        });
+      };
+
+
+      $scope.refreshPicture();
+
+    }]);  
+  </script>
+
+</head>
+<body ng-controller="myCtrl">
+  <div>
+    <div>
+      <nav class="navbar navbar-inverse" role="navigation" style="padding-left:130px;">
+       <ul class="nav navbar-nav">
+        <li><a href="/">Home</a></li>
+        <li class="active"><a href="/upload">Upload Pictures<span class="sr-only">(current)</span></a></li>
+        <li><a href="/annonce">Annonces</a></li>
+        <li><a href="/about">About us</a></li>
+      </ul>
+    </nav>
+  </div>
+  <br/>
+
+  <div class="container">  
+
+    <div class="form-inline">
+        <div class="form-group">
+            <div class="input-group">
+              <input type="file" file-model="myFile" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">    
+            <div class="input-group">
+              <input ng-model="picturename" type="text" class="form-control" placeholder="Name">
+              <div class="input-group-btn">
+                <!-- Button and dropdown menu -->
+                <button ng-click="uploadFile()" class="btn btn-default">Upload</button>
+              </div>
+            </div>
+        </div>
+    </div>
+
+    <br/>
+    <br/>
+
+    <div class="row">
+      <div class="col-sm-3 col-md-2" ng-repeat="image in images">
+        <div class="thumbnail">
+          <img ng-src="{{image.src}}" />
+          <!--img ng-src="image.src" /-->
+          <div class="caption">
+            <!--h3>Label</h3>
+            <p>description</p-->
+            <p>
+              <a href="" ng-click="deletePicture(image._id)">
+                <span class='glyphicon glyphicon-remove'>
+              </a>
+              {{image.name}}
+              <br/>
+              {{image._id}}
+            </p>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "name": "node-hello-world",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Node.js Hello world app on docker",
+  "author": "hypriot.com",
+  "dependencies": {
+    "body-parser": "^1.14.2",
+    "elasticsearch": "latest",
+    "express": "4.12.0",
+    "lodash": "^3.10.1",
+    "multer": "latest",
+    "shortid": "latest"
+  }
+}

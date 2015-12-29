@@ -1,0 +1,60 @@
+#elk:
+#  image: qnib/elk
+#  ports:
+#   - "9200:9200"
+#   - "5514:5514"
+#   - "5601:5601"
+#   - "8080:80"
+#   - "8500:8500"
+#  environment:
+#  - DC_NAME=dc1
+#  - RUN_SERVER=true
+#  - BOOTSTRAP_CONSUL=true
+#  - COLLECT_METRICS=false
+#  - FORWARD_TO_LOGSTASH=false
+#  dns: 127.0.0.1
+#  hostname: elk
+#  volumes: 
+#   - /Users/aquinault/Code/mystack:/var/lib/elasticsearch
+#  privileged: true
+
+elasticsearch:
+  image: elasticsearch
+  command: elasticsearch -Des.network.bind_host=0.0.0.0
+  ports:
+    - "9200:9200"
+  hostname: elasticsearch
+  #volumes: 
+  #  - ${PWD}/esdata:/usr/share/elasticsearch/data
+  # - /Users/aquinault/Code/mystack/elasticsearch/config:/usr/share/elasticsearch/config
+  privileged: true
+
+kibana:
+  image: kibana
+  ports:
+     - "5601:5601"
+  hostname: kibana
+  environment:
+    - ELASTICSEARCH_URL=http://192.168.99.100:9200
+  privileged: true
+
+nodejs:
+  image: node-hello
+  ports:
+     - "8080:80"
+  hostname: nodejs
+  volumes: 
+    - ${PWD}/dev/nodejs/src:/usr/src/app
+  #environment:
+  #  - name=web
+  privileged: true
+
+
+#nginx:
+#  image: nginx
+#  ports:
+#    - "8000:80"
+#  hostname: nginx
+#  volumes: 
+#    - /Users/aquinault/Code/mystack/nginx/nginx.conf:/etc/nginx/nginx.conf
+#  privileged: true

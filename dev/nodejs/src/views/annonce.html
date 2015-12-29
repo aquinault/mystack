@@ -1,0 +1,263 @@
+<html ng-app="myApp">
+<head>
+   <!--link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script-->
+
+  <link rel="stylesheet" href="bootstrap.min.css">
+  <script src="jquery-1.11.3.min.js"></script>
+  <script src="angular.min.js"></script>
+  <script src="bootstrap.min.js"></script>
+
+
+  <script>
+    // Create a new module
+    var myModule = angular.module('myApp', []);
+
+    
+
+    myModule.controller('myCtrl', ['$scope', '$http', '$timeout', function($scope, $http, $timeout) {
+      /*$scope.images = [
+        { "src": "/pictures/V1ut5Lqrg", "alt": "First Image" }, 
+        { "src": "/pictures/1", "alt": "Second image" }, 
+        { "src": "/pictures/Vk66mUqSl", "alt": "Third image" }, 
+        { "src": "/pictures/NJeX9QESe", "alt": "Fourth image" }
+      ];*/
+
+      $scope.annonce = {
+        name: '',
+        description: '',
+        picture: '',
+        email: '',
+        url: '',
+        telephone: '',
+        positionx: '',
+        positiony: ''
+      };
+
+      $scope.refreshPicture = function() {              
+        $http.get("/pictures").then(function(response) {            
+            $scope.images = [];
+            for(var i=0; i<response.data.length; i++) {
+              var myObj = {
+                'src': '/pictures/' + response.data[i]._id,
+                'alt': response.data[i]._type,
+                '_id': response.data[i]._id,
+                'name': response.data[i].name
+              }
+              $scope.images.push(myObj);
+            }            
+        });      
+      };
+
+      $scope.refreshAnnonces = function() {              
+        $http.get("/annonces").then(function(response) {            
+            $scope.annonces = [];
+            for(var i=0; i<response.data.length; i++) {
+              var myObj = {
+                'src': '/pictures/' + response.data[i]._source.picture,
+                'alt': response.data[i]._type,
+                '_id': response.data[i]._id,
+                'name': response.data[i]._source.name,
+                'description': response.data[i]._source.description,
+                'email': response.data[i]._source.email,
+                'url': response.data[i]._source.url,
+                'telephone': response.data[i]._source.telephone,
+                'positionx': response.data[i]._source.positionx,
+                'positiony': response.data[i]._source.positiony
+              }
+              $scope.annonces.push(myObj);
+            }            
+        });      
+      };
+
+     $scope.createAnnonce = function(){
+        var uploadUrl = "/annonces";
+
+        $http.post(uploadUrl,$scope.annonce).success(function(response){
+
+          $timeout(function() {
+            console.log("success!!");
+            var myObj = {
+              'src': '/pictures/' + response.picture,
+              'alt': response._type,
+              '_id': response._id,
+              'name': response.name,
+              'description': response.description,
+              'email': response.email,
+              'url': response.url,
+              'telephone': response.telephone,
+              'positionx': response.positionx,
+              'positiony': response.positiony              
+            }
+
+            $scope.annonces.push(myObj);            
+
+          }, 900);
+          console.log('success create annonce')
+        })
+        .error(function(){
+          console.log("error!! create annonce");
+        });
+      };
+
+      $scope.deleteAnnonce = function(_id) {
+        //$scope.quantityResult = calculateService.calculate($scope.quantity, 10);
+        if (confirm("sure to delete")) {
+          // todo code for deletion
+          console.log('deleteAnnonce');
+          $http.delete("/annonces/" + _id).then(function(response) {
+            for(var i = $scope.annonces.length - 1; i >= 0; i--) {
+                if($scope.annonces[i]._id === response.data._id) {
+                   $scope.annonces.splice(i, 1);
+                }
+            }
+          });
+        }
+      };
+
+      $scope.refreshPicture();      
+      $scope.refreshAnnonces();      
+
+    }]);  
+  </script>
+
+</head>
+<body ng-controller="myCtrl">
+  <div>
+    <div>
+      <nav class="navbar navbar-inverse" role="navigation" style="padding-left:130px;">
+       <ul class="nav navbar-nav">
+        <li><a href="/">Home</a></li>
+        <li><a href="/upload">Upload Pictures</a></li>
+        <li class="active"><a href="/annonce">Annonces<span class="sr-only">(current)</span></a></li>
+        <li><a href="/about">About us</a></li>
+      </ul>
+    </nav>
+  </div>
+  <br/>
+
+  <div class="container">  
+
+    <div class="row">
+      <div class="col-sm-12 col-md-12">
+
+        <form class="form-horizontal">
+
+          <div class="form-group">
+            <label for="inputName3" class="col-sm-2 control-label">Name</label>
+            <div class="col-sm-10">
+              <input ng-model="annonce.name" type="text" class="form-control" id="inputName3" placeholder="Name">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="inputDescription3" class="col-sm-2 control-label">Description</label>
+            <div class="col-sm-10">              
+              <textarea ng-model="annonce.description" class="form-control" rows="3" id="inputDescription3"></textarea>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="inputPicture3" class="col-sm-2 control-label">Picture</label>
+            <div class="col-sm-10">
+              
+              <select ng-model="annonce.picture" class="form-control">
+                <option ng-repeat="image in images" value="{{image._id}}">{{image.name}}</option>
+              </select>
+
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+            <div class="col-sm-10">
+              <input ng-model="annonce.email" type="email" class="form-control" id="inputEmail3" placeholder="Email">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="inputUrl3" class="col-sm-2 control-label">Url</label>
+            <div class="col-sm-10">
+              <input ng-model="annonce.url" type="url" class="form-control" id="inputUrl3" placeholder="Url">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="inputTel3" class="col-sm-2 control-label">Telephone</label>
+            <div class="col-sm-10">
+              <input ng-model="annonce.telephone" type="tel" class="form-control" id="inputTel3" placeholder="Email">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="inputPosX" class="col-sm-2 control-label">Position X</label>
+            <div class="col-sm-10">
+              <input ng-model="annonce.positionx" type="text" class="form-control" id="inputPosX" placeholder="Position X">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="inputPosY" class="col-sm-2 control-label">Position Y</label>
+            <div class="col-sm-10">
+              <input ng-model="annonce.positiony" type="text" class="form-control" id="inputPosY" placeholder="Position Y">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button ng-click="createAnnonce()" type="submit" class="btn btn-default">Create</button>
+            </div>
+          </div>
+        </form>
+
+      </div>  
+    </div>
+    <br/>
+    <br/>
+
+
+   <div class="row">
+      <div class="col-sm-12 col-md-12">
+        <table class="table table-hover">
+          <thead>
+            <th>Name</th>
+            <th>Description</th>
+            <th>picture</th>
+            <th>Email</th>
+            <th>Url</th>
+            <th>Telephone</th>
+            <th>PositionX</th>
+            <th>PositionY</th>
+            <th>Date debut</th>
+            <th>Date fin</th>
+            <th>Action</th>
+          </thead>
+          <tbody ng-repeat="annonce in annonces">
+            <td>{{annonce.name}}</td>
+            <td>{{annonce.description}}</td>
+            <td><img ng-src="{{annonce.src}}" height="30" width="30"/></td>
+            <td>{{annonce.email}}</td>
+            <td>{{annonce.url}}</td>
+            <td>{{annonce.telephone}}</td>
+            <td>{{annonce.positionx}}</td>
+            <td>{{annonce.positiony}}</td>
+            <td>01/01/2016</td>
+            <td>31/12/2016</td>
+            <td>
+                <a href="" ng-click="deleteAnnonce(annonce._id)">
+                <span class='glyphicon glyphicon-remove'>
+                </a>
+            </td>
+          </tbody>
+        </table>
+      </div>  
+    </div>
+
+    
+  </div>
+
+</div>
+</body>
+</html>
