@@ -15,7 +15,7 @@ var bodyParser = require('body-parser');
 
 var client = new elasticsearch.Client({
 //  host: '192.168.99.100:9200',
-  host: '188.166.103.138:9200',
+  host: '127.0.0.1:9200',
   log: 'info',
   requestTimeout : 2000
 });
