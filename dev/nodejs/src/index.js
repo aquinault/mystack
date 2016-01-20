@@ -14,7 +14,8 @@ var bodyParser = require('body-parser');
 //app.use(multer({dest:'./uploads/'}).single('singleInputFileName'));
 
 var client = new elasticsearch.Client({
-  host: '192.168.99.100:9200',
+//  host: '192.168.99.100:9200',
+  host: '188.166.103.138:9200',
   log: 'info',
   requestTimeout : 2000
 });
