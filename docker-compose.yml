@@ -36,7 +36,8 @@ kibana:
      - "5601:5601"
   hostname: kibana
   environment:
-    - ELASTICSEARCH_URL=http://188.166.103.138:9200
+    - ELASTICSEARCH_URL=http://127.0.0.1:9200
+  #  - ELASTICSEARCH_URL=http://188.166.103.138:9200
   #    - ELASTICSEARCH_URL=http://192.168.99.100:9200
   privileged: true
   restart: always
