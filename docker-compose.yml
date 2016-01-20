@@ -28,6 +28,7 @@ elasticsearch:
   #  - ${PWD}/esdata:/usr/share/elasticsearch/data
   # - /Users/aquinault/Code/mystack/elasticsearch/config:/usr/share/elasticsearch/config
   privileged: true
+  restart: always
 
 kibana:
   image: kibana
@@ -37,6 +38,7 @@ kibana:
   environment:
     - ELASTICSEARCH_URL=http://192.168.99.100:9200
   privileged: true
+  restart: always
 
 nodejs:
   image: node-hello
@@ -48,7 +50,7 @@ nodejs:
   #environment:
   #  - name=web
   privileged: true
-
+  restart: always
 
 #nginx:
 #  image: nginx
