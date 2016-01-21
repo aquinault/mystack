@@ -62,4 +62,5 @@ nodejs:
 #  hostname: nginx
 #  volumes: 
 #    - /Users/aquinault/Code/mystack/nginx/nginx.conf:/etc/nginx/nginx.conf
+#    - /Users/aquinault/Code/mystack/nginx/htpasswd/:/etc/nginx/htpasswd
 #  privileged: true
