@@ -27,7 +27,7 @@ elasticsearch:
   #links: 
   #  - nginxproxy:nginxproxy
   environment:
-       - VIRTUAL_HOST=es
+       - VIRTUAL_HOST=es.cadesoft.com
   #volumes: 
   #  - ${PWD}/esdata:/usr/share/elasticsearch/data
   # - /Users/aquinault/Code/mystack/elasticsearch/config:/usr/share/elasticsearch/config
@@ -42,8 +42,8 @@ kibana:
   #links: 
   #  - elasticsearch:elasticsearch
   environment:
-    - VIRTUAL_HOST=kibana
-    - ELASTICSEARCH_URL=http://es.labo1.cadesoft.com
+    - VIRTUAL_HOST=kibana.cadesoft.com
+    - ELASTICSEARCH_URL=http://es.cadesoft.com
   #  - ELASTICSEARCH_URL=http://188.166.103.138:9200
   #  - ELASTICSEARCH_URL=http://127.0.0.1:9200
   #  - ELASTICSEARCH_URL=http://localhost:9200
@@ -59,7 +59,7 @@ nodejs:
   #links: 
   #  - elasticsearch:elasticsearch
   environment:
-    - VIRTUAL_HOST=nodejs
+    - VIRTUAL_HOST=nodejs.cadesoft.com
   volumes: 
     - ${PWD}/dev/nodejs/src:/usr/src/app
   #environment:
