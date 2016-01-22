@@ -61,7 +61,7 @@ nodejs:
 nginxproxy:
   image: jwilder/nginx-proxy
   ports:
-    - "8000:80"
+    - "80:80"
   hostname: nginxproxy
   volumes: 
     - /var/run/docker.sock:/tmp/docker.sock
