@@ -24,10 +24,10 @@ elasticsearch:
   ports:
     - "9200:9200"
   hostname: elasticsearch
-  links: 
-    - nginxproxy:nginxproxy
+  #links: 
+  #  - nginxproxy:nginxproxy
   environment:
-       - VIRTUAL_HOST=es.labo1.cadesoft.com
+       - VIRTUAL_HOST=es
   #volumes: 
   #  - ${PWD}/esdata:/usr/share/elasticsearch/data
   # - /Users/aquinault/Code/mystack/elasticsearch/config:/usr/share/elasticsearch/config
@@ -39,9 +39,10 @@ kibana:
   ports:
      - "5601:5601"
   hostname: kibana
-  links: 
-    - elasticsearch:elasticsearch
+  #links: 
+  #  - elasticsearch:elasticsearch
   environment:
+    - VIRTUAL_HOST=kibana
     - ELASTICSEARCH_URL=http://es.labo1.cadesoft.com
   #  - ELASTICSEARCH_URL=http://188.166.103.138:9200
   #  - ELASTICSEARCH_URL=http://127.0.0.1:9200
@@ -55,8 +56,10 @@ nodejs:
   ports:
      - "8080:80"
   hostname: nodejs
-  links: 
-    - elasticsearch:elasticsearch
+  #links: 
+  #  - elasticsearch:elasticsearch
+  environment:
+    - VIRTUAL_HOST=nodejs
   volumes: 
     - ${PWD}/dev/nodejs/src:/usr/src/app
   #environment:
