@@ -25,7 +25,7 @@ elasticsearch:
     - "9200:9200"
   hostname: elasticsearch
   links: 
-    - nginxproxy:jwilder/nginx-proxy  
+    - nginxproxy:nginxproxy
   environment:
        - VIRTUAL_HOST=es.labo1.cadesoft.com
   #volumes: 
