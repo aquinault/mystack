@@ -24,6 +24,8 @@ elasticsearch:
   ports:
     - "9200:9200"
   hostname: elasticsearch
+  environment:
+       - VIRTUAL_HOST=www.es.labo1.cadesoft.com,es.labo1.cadesoft.com
   #volumes: 
   #  - ${PWD}/esdata:/usr/share/elasticsearch/data
   # - /Users/aquinault/Code/mystack/elasticsearch/config:/usr/share/elasticsearch/config
@@ -36,9 +38,10 @@ kibana:
      - "5601:5601"
   hostname: kibana
   environment:
+    - ELASTICSEARCH_URL=http://www.es.labo1.cadesoft.com
+  #  - ELASTICSEARCH_URL=http://188.166.103.138:9200
   #  - ELASTICSEARCH_URL=http://127.0.0.1:9200
   #  - ELASTICSEARCH_URL=http://localhost:9200
-    - ELASTICSEARCH_URL=http://188.166.103.138:9200
   #    - ELASTICSEARCH_URL=http://192.168.99.100:9200
   privileged: true
   restart: always
@@ -55,6 +58,17 @@ nodejs:
   privileged: true
   restart: always
 
+nginxproxy:
+  image: jwilder/nginx-proxy
+  ports:
+    - "8000:80"
+  hostname: nginxproxy
+  volumes: 
+    - /var/run/docker.sock:/tmp/docker.sock
+#    - /Users/aquinault/Code/mystack/nginx/.htpasswd:/etc/nginx/.htpasswd
+  privileged: true
+  restart: always
+
 #nginx:
 #  image: nginx
 #  ports:
@@ -64,3 +78,4 @@ nodejs:
 #    - /Users/aquinault/Code/mystack/nginx/nginx.conf:/etc/nginx/nginx.conf
 #    - /Users/aquinault/Code/mystack/nginx/.htpasswd:/etc/nginx/.htpasswd
 #  privileged: true
+#  restart: always
