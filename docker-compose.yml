@@ -18,21 +18,21 @@
 #   - /Users/aquinault/Code/mystack:/var/lib/elasticsearch
 #  privileged: true
 
-elasticsearch:
-  image: elasticsearch
-  command: elasticsearch -Des.network.bind_host=0.0.0.0
-  ports:
-    - "9200:9200"
-  hostname: elasticsearch
+#elasticsearch:
+  #image: elasticsearch
+  #command: elasticsearch -Des.network.bind_host=0.0.0.0
+  #ports:
+  #  - "9200:9200"
+  #hostname: elasticsearch
+  #environment:
+  #     - VIRTUAL_HOST=es.cadesoft.com
+  #privileged: true
+  #restart: always
   #links: 
   #  - nginxproxy:nginxproxy
-  environment:
-       - VIRTUAL_HOST=es.cadesoft.com
   #volumes: 
   #  - ${PWD}/esdata:/usr/share/elasticsearch/data
   # - /Users/aquinault/Code/mystack/elasticsearch/config:/usr/share/elasticsearch/config
-  privileged: true
-  restart: always
 
 kibana:
   image: kibana
