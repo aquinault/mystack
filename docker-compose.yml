@@ -71,16 +71,16 @@ nodejs:
 #  privileged: true
 #  restart: always
 
-nginx:
-  image: nginx
-  ports:
-    - "80:80"
-  hostname: nginx
-  links: 
-    - elasticsearch:elasticsearch
-#    - nodejs:nodejs
-  volumes: 
-    - ${PWD}/nginx/nginx.conf:/etc/nginx/nginx.conf
+#nginx:
+#  image: nginx
+#  ports:
+#    - "80:80"
+#  hostname: nginx
+#  links: 
+#    - elasticsearch:elasticsearch
+ #    - nodejs:nodejs
+#  volumes: 
+#    - ${PWD}/nginx/nginx.conf:/etc/nginx/nginx.conf
   #  - /Users/aquinault/Code/mystack/nginx/.htpasswd:/etc/nginx/.htpasswd
-  privileged: true
-  restart: always
+#  privileged: true
+#  restart: always
