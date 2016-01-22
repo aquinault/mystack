@@ -48,7 +48,7 @@ elasticsearch:
 nodejs:
   image: node-hello
   ports:
-     - "8080:8000"
+     - "8080:80"
   hostname: nodejs
   #links: 
   #  - elasticsearch:elasticsearch
