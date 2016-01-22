@@ -20,7 +20,7 @@
 
 elasticsearch:
   image: elasticsearch
-  command: elasticsearch -Des.network.bind_host=0.0.0.0
+  #command: elasticsearch -Des.network.bind_host=0.0.0.0
   ports:
     - "9200:9200"
   hostname: elasticsearch
