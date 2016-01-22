@@ -34,22 +34,16 @@
   #  - ${PWD}/esdata:/usr/share/elasticsearch/data
   # - /Users/aquinault/Code/mystack/elasticsearch/config:/usr/share/elasticsearch/config
 
-kibana:
-  image: kibana
-  ports:
-     - "5601:5601"
-  hostname: kibana
-  #links: 
-  #  - elasticsearch:elasticsearch
-  environment:
-    - VIRTUAL_HOST=kibana.cadesoft.com
-    - ELASTICSEARCH_URL=http://es.cadesoft.com
-  #  - ELASTICSEARCH_URL=http://188.166.103.138:9200
-  #  - ELASTICSEARCH_URL=http://127.0.0.1:9200
-  #  - ELASTICSEARCH_URL=http://localhost:9200
-  #    - ELASTICSEARCH_URL=http://192.168.99.100:9200
-  privileged: true
-  restart: always
+#kibana:
+#  image: kibana
+#  ports:
+#     - "5601:5601"
+#  hostname: kibana
+#  environment:
+#    - VIRTUAL_HOST=kibana.cadesoft.com
+#    - ELASTICSEARCH_URL=http://es.cadesoft.com
+#  privileged: true
+#  restart: always
 
 nodejs:
   image: node-hello
