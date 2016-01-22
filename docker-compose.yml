@@ -74,7 +74,7 @@ nodejs:
 nginx:
   image: nginx
   ports:
-    - "8000:80"
+    - "80:80"
   hostname: nginx
   links: 
     - elasticsearch:elasticsearch
