@@ -78,6 +78,7 @@ nginx:
   hostname: nginx
   links: 
     - elasticsearch:elasticsearch
+    - nodejs:nodejs
   volumes: 
     - ${PWD}/nginx/nginx.conf:/etc/nginx/nginx.conf
   #  - /Users/aquinault/Code/mystack/nginx/.htpasswd:/etc/nginx/.htpasswd
