@@ -20,12 +20,12 @@
 
 elasticsearch:
   image: elasticsearch
-  command: elasticsearch -Des.network.bind_host=0.0.0.0
+  #command: elasticsearch -Des.network.bind_host=0.0.0.0
   ports:
     - "9200:9200"
   hostname: elasticsearch
   environment:
-       - VIRTUAL_HOST=elasticsearch.cadesoft.com
+       - VIRTUAL_HOST=es.cadesoft.com
   privileged: true
   restart: always
   #links: 
@@ -61,25 +61,25 @@ nodejs:
   privileged: true
   restart: always
 
-nginxproxy:
-  image: jwilder/nginx-proxy
+#nginxproxy:
+#  image: jwilder/nginx-proxy
+#  ports:
+#    - "80:80"
+#  hostname: nginxproxy
+#  volumes: 
+#    - /var/run/docker.sock:/tmp/docker.sock
+#  privileged: true
+#  restart: always
+
+nginx:
+  image: nginx
   ports:
-    - "80:80"
-  hostname: nginxproxy
+    - "8000:80"
+  hostname: nginx
+  links: 
+    - elasticsearch:elasticsearch
   volumes: 
-    - /var/run/docker.sock:/tmp/docker.sock
+    - /Users/aquinault/Code/mystack/nginx/nginx.conf:/etc/nginx/nginx.conf
+  #  - /Users/aquinault/Code/mystack/nginx/.htpasswd:/etc/nginx/.htpasswd
   privileged: true
   restart: always
-
-#nginx:
- # image: nginx
- # ports:
- #   - "8000:80"
- # hostname: nginx
- # links: 
- #   - elasticsearch:elasticsearch
- # volumes: 
-#    - /Users/aquinault/Code/mystack/nginx/nginx.conf:/etc/nginx/nginx.conf
-#    - /Users/aquinault/Code/mystack/nginx/.htpasswd:/etc/nginx/.htpasswd
- # privileged: true
-  #restart: always
