@@ -21,8 +21,8 @@
 elasticsearch:
   image: elasticsearch
   #command: elasticsearch -Des.network.bind_host=0.0.0.0
-  ports:
-    - "9200:9200"
+  #ports:
+  #  - "9200:9200"
   hostname: elasticsearch
   environment:
        - VIRTUAL_HOST=es.cadesoft.com
@@ -47,8 +47,8 @@ elasticsearch:
 
 nodejs:
   image: node-hello
-  ports:
-     - "8080:80"
+  #ports:
+  #   - "8080:80"
   hostname: nodejs
   #links: 
   #  - elasticsearch:elasticsearch
