@@ -10,12 +10,14 @@ var fs = require('fs');
 var path = __dirname + '/views/';
 var _ = require('lodash');
 var bodyParser = require('body-parser');
+var config = require('./config');
+
 
 //app.use(multer({dest:'./uploads/'}).single('singleInputFileName'));
 
 var client = new elasticsearch.Client({
 //  host: '192.168.99.100:9200',
-  host: '188.166.103.138:9200',
+  host: config.url,
   log: 'info',
   requestTimeout : 2000
 });
