@@ -107,7 +107,7 @@ app.post('/annonces', function (req, res) {
       "url": req.body.url,
       "telephone": req.body.telephone,
       "positionx": req.body.positionx,
-      "positiony": req.body.positiony
+      "positiony": req.body.positiony,
       "id_qrcode": req.body.id_qrcode,
       "start_at": req.body.start_at,
       "end_at": req.body.end_at
