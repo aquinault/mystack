@@ -33,7 +33,10 @@
         url: '',
         telephone: '',
         positionx: '',
-        positiony: ''
+        positiony: '',
+        start_at: '',
+        end_at: '',
+        id_qrcode: ''
       };
 
       $scope.refreshPicture = function() {              
@@ -65,7 +68,10 @@
                 'url': response.data[i]._source.url,
                 'telephone': response.data[i]._source.telephone,
                 'positionx': response.data[i]._source.positionx,
-                'positiony': response.data[i]._source.positiony
+                'positiony': response.data[i]._source.positiony,
+                'start_at': response.data[i]._source.start_at,
+                'end_at': response.data[i]._source.end_at,
+                'id_qrcode': response.data[i]._source.id_qrcode
               }
               $scope.annonces.push(myObj);
             }            
@@ -89,7 +95,10 @@
               'url': response.url,
               'telephone': response.telephone,
               'positionx': response.positionx,
-              'positiony': response.positiony              
+              'positiony': response.positiony,              
+              'start_at': response.start_at,
+              'end_at': response.end_at,
+              'id_qrcode': response.id_qrcode
             }
 
             $scope.annonces.push(myObj);            
@@ -187,7 +196,28 @@
           <div class="form-group">
             <label for="inputTel3" class="col-sm-2 control-label">Telephone</label>
             <div class="col-sm-10">
-              <input ng-model="annonce.telephone" type="tel" class="form-control" id="inputTel3" placeholder="Email">
+              <input ng-model="annonce.telephone" type="tel" class="form-control" id="inputTel3" placeholder="Telephone">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="inputTel3" class="col-sm-2 control-label">Id QRCode</label>
+            <div class="col-sm-10">
+              <input ng-model="annonce.id_qrcode" type="tel" class="form-control" id="inputTel3" placeholder="Id QRCode">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="inputTel3" class="col-sm-2 control-label">Start At</label>
+            <div class="col-sm-10">
+              <input ng-model="annonce.start_at" type="tel" class="form-control" id="inputTel3" placeholder="Start At">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="inputTel3" class="col-sm-2 control-label">End At</label>
+            <div class="col-sm-10">
+              <input ng-model="annonce.end_at" type="tel" class="form-control" id="inputTel3" placeholder="End At">
             </div>
           </div>
 

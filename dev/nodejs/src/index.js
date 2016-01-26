@@ -88,7 +88,10 @@ app.post('/annonces', function (req, res) {
       telephone: req.body.telephone,
       positionx: req.body.positionx,
       positiony: req.body.positiony,
-      created_at: formatDate()
+      created_at: formatDate(),
+      id_qrcode: req.body.id_qrcode,
+      start_at: req.body.start_at,
+      end_at: req.body.end_at
     }
   }, function (error, response) {
     if(error) console.log( error );
@@ -105,6 +108,9 @@ app.post('/annonces', function (req, res) {
       "telephone": req.body.telephone,
       "positionx": req.body.positionx,
       "positiony": req.body.positiony
+      "id_qrcode": req.body.id_qrcode,
+      "start_at": req.body.start_at,
+      "end_at": req.body.end_at
     };
     res.send(myObj);
   });
@@ -164,7 +170,7 @@ app.post('/multer', upload.single('file'), function (req, res) {
       client.index({
         index: 'adimages',
         type: 'images',
-        id: myId, //'1',
+        id_image: myId, //'1',
         body: {
           image: data, //'Test 1'
           name: req.body.picturename,
