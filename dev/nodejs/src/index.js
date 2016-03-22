@@ -331,7 +331,7 @@ app.get('/pictures', function (req, res) {
 
   }, function (error) {
     //console.trace(error.message);
-    res.send('<html><body>elasticsearch cluster is down!</body></html>');
+    res.status(404).send('Sorry, we cannot find that!');
   });  
 });
 /*
