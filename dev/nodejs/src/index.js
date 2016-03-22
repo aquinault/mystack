@@ -96,25 +96,28 @@ app.post('/annonces', function (req, res) {
       end_at: req.body.end_at
     }
   }, function (error, response) {
-    if(error) console.log( error );
-
-    var myObj = {
-      "_index": "annonces",
-      "_type": "annonces",
-      "_id": req.body._id,
-      "name": req.body.name,
-      "description": req.body.description,
-      "picture": req.body.picture,
-      "email": req.body.email,
-      "url": req.body.url,
-      "telephone": req.body.telephone,
-      "positionx": req.body.positionx,
-      "positiony": req.body.positiony,
-      "id_qrcode": req.body.id_qrcode,
-      "start_at": req.body.start_at,
-      "end_at": req.body.end_at
-    };
-    res.send(myObj);
+    if(error) {
+      console.log( error );
+      res.status(404).send('Sorry, we cannot find that!');
+    } else {
+      var myObj = {
+        "_index": "annonces",
+        "_type": "annonces",
+        "_id": req.body._id,
+        "name": req.body.name,
+        "description": req.body.description,
+        "picture": req.body.picture,
+        "email": req.body.email,
+        "url": req.body.url,
+        "telephone": req.body.telephone,
+        "positionx": req.body.positionx,
+        "positiony": req.body.positiony,
+        "id_qrcode": req.body.id_qrcode,
+        "start_at": req.body.start_at,
+        "end_at": req.body.end_at
+      };
+      res.send(myObj);
+    }
   });
     
 });
@@ -128,7 +131,9 @@ app.delete('/annonces/:id', function (req, res) {
   }, function (error, response) {
     if(error) {
       console.log('annonces post deleted error');
-      res.send('annonces post deleted error');          
+      //res.send('annonces post deleted error');        
+      res.status(404).send('Sorry, we cannot find that!');
+  
     } else {
       console.log('annonces post deleted');
 
@@ -163,9 +168,10 @@ app.post('/multer', upload.single('file'), function (req, res) {
 
   // Read in Base64
   fs.readFile(req.file.path, "base64", function(err, data) {
-    if( err ){
+    if(err){
       console.log( err );
-      res.send('<html><body>OK</body></html>');
+      //res.send('<html><body>OK</body></html>');
+      res.status(404).send('Sorry, we cannot find that!');
     } else {
       var D = new Date();
       // Write to elastic search
@@ -179,16 +185,18 @@ app.post('/multer', upload.single('file'), function (req, res) {
           created_at: formatDate()
         }
       }, function (error, response) {
-        console.log( err );
-
-        var myObj = {
-          "_index": "adimages",
-          "_type": "images",
-          "_id": myId,
-          "name": req.body.picturename
-        };
-        res.send(myObj);
-
+        if(err) {
+          console.log( err );
+          res.status(404).send('Sorry, we cannot find that!');
+        } else {
+          var myObj = {
+            "_index": "adimages",
+            "_type": "images",
+            "_id": myId,
+            "name": req.body.picturename
+          };
+          res.send(myObj);
+        }      
       });
     }
   });
@@ -281,7 +289,9 @@ app.get('/pictures/:id', function (req, res) {
     res.send(buf);
   }, function (error) {
     //console.trace(error.message);
-    res.send('<html><body>elasticsearch cluster is down!</body></html>');
+    //res.send('<html><body>elasticsearch cluster is down!</body></html>');
+    res.status(404).send('Sorry, we cannot find that!');
+
   });  
 });
 
@@ -293,7 +303,8 @@ app.delete('/pictures/:id', function (req, res) {
   }, function (error, response) {
     if(error) {
       console.log('post deleted error');
-      res.send('post deleted error');          
+      //res.send('post deleted error');         
+      res.status(404).send('Sorry, we cannot find that!'); 
     } else {
       console.log('post deleted');
 
