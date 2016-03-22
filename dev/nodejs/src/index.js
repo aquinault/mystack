@@ -201,7 +201,8 @@ app.use(function (req, res, next) {
 });
 
 app.get('/', function (req, res) {
-  res.send('<html><body>Hello from Node.js container1 ' + hostname + '</body></html>');
+  //res.send('<html><body>Hello from Node.js container1 ' + hostname + '</body></html>');
+  res.redirect('/annonce');
 });
 
 app.get("/about",function(req,res){
