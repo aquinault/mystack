@@ -316,7 +316,8 @@ app.get('/pictures', function (req, res) {
     var hits = body.hits.hits;
     
     if(!body.hits.max_score) {
-      res.send('<html><body>no data!</body></html>');
+      //res.send('<html><body>no data!</body></html>');
+      res.status(404).send('Sorry, we cannot find that!');
       return;
     }
    
