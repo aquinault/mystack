@@ -112,14 +112,22 @@
 <body ng-controller="myCtrl">
   <div>
     <div>
+
       <nav class="navbar navbar-inverse" role="navigation" style="padding-left:130px;">
-       <ul class="nav navbar-nav">
-        <li><a href="/">Home</a></li>
-        <li class="active"><a href="/upload">Upload Pictures<span class="sr-only">(current)</span></a></li>
-        <li><a href="/annonce">Annonces</a></li>
-        <li><a href="/about">About us</a></li>
-      </ul>
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">
+              <img alt="Brand" width="40" height="20" src="/images/icone-eye-navbar.png">
+            </a>
+          </div>
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="/upload">Upload Pictures<span class="sr-only">(current)</span></a></li>
+            <li><a href="/annonce">Annonces</a></li>
+            <li><a href="/about">About us</a></li>
+          </ul>
+        </div>
     </nav>
+
   </div>
   <br/>
 
