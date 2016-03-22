@@ -60,7 +60,8 @@ app.get('/annonces', function (req, res) {
     var hits = body.hits.hits;
     
     if(!body.hits.max_score) {
-      res.send('<html><body>no data!</body></html>');
+      //res.send('<html><body>no data!</body></html>');
+      res.status(404).send('Sorry, we cannot find that!');
       return;
     }
    
@@ -68,7 +69,8 @@ app.get('/annonces', function (req, res) {
 
   }, function (error) {
     //console.trace(error.message);
-    res.send('<html><body>elasticsearch cluster is down!</body></html>');
+    //res.send('<html><body>elasticsearch cluster is down!</body></html>');
+    res.status(404).send('Sorry, we cannot find that!');
   });    
 });
 
